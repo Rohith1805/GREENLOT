@@ -1,0 +1,162 @@
+/* Navbar Styles */
+nav {
+    background: #07a240;
+    color: white;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+  }
+  
+  .notification {
+    position: relative;
+  }
+  
+  .notification .fa-bell {
+    font-size: 18px;
+    color: white;
+    padding-right: 10px;
+  }
+  
+  .notification .dot {
+    height: 8px;
+    width: 8px;
+    background-color: red;
+    border-radius: 50%;
+    position: absolute;
+    top: 0;
+    right: 5px;
+  }
+  
+  .logo-title {
+    display: flex;
+    align-items: center;
+  }
+  
+  .logo-title img {
+    height: 40px;
+    margin-right: 10px;
+  }
+  
+  .menu {
+    display: flex;
+    align-items: center;
+  }
+  
+  .menu a {
+    margin: 0 10px;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+  }
+  
+  .menu a:hover {
+    text-decoration: underline;
+  }
+  
+  .menu a.active {
+    position: relative;
+    font-weight: bold;
+  }
+  
+  .menu a.active::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -6px;
+    width: 100%;
+    height: 3px;
+    background-color: white;
+    border-radius: 2px;
+  }
+  
+  /* Dark mode for navbar */
+  body.dark-mode nav {
+    background: #196c0a;
+  }
+  
+  body.dark-mode .menu a.active::after {
+    background-color: #90ee90;
+  }
+  
+  /* Profile Section */
+  #profileSection {
+    display: flex;
+    align-items: center;
+  }
+  
+  .user-profile-container {
+    position: relative;
+    cursor: pointer;
+  }
+  
+  .user-profile {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: bold;
+  }
+  
+  /* Profile Dropdown */
+  .profile-dropdown {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: white;
+    color: black;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    padding: 0.5rem;
+    z-index: 100;
+    min-width: 140px;
+  }
+  
+  .profile-dropdown a,
+  .profile-dropdown button {
+    padding: 10px 16px;
+    background: none;
+    border: none;
+    text-align: left;
+    width: 100%;
+    cursor: pointer;
+    font-weight: 500;
+    color: inherit;
+    font-size: 14px;
+    transition: background 0.2s;
+  }
+  
+  .profile-dropdown a:hover,
+  .profile-dropdown button:hover {
+    background: rgba(0, 0, 0, 0.05);
+  }
+  
+  /* Dark mode for profile dropdown */
+  body.dark-mode .profile-dropdown {
+    background: #000000;
+    color: white;
+  }
+  
+  body.dark-mode .profile-dropdown a:hover,
+  body.dark-mode .profile-dropdown button:hover {
+    background: rgba(15, 230, 76, 0.1);
+  }
+  
+  /* Language Switcher */
+  .lang-selector select {
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: none;
+    margin-left: 15px;
+    cursor: pointer;
+  }
+  
+  body.dark-mode .lang-selector select {
+    background: #333;
+    color: white;
+  }
+  

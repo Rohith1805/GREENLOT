@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Recommended Crops</title>
+  <link rel="stylesheet" href="../css/crop-sugg.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+  <!-- Language Selector -->
+  <!-- <div style="text-align: right; padding: 10px;">
+    <select id="languageSwitcher" onchange="setLanguage(this.value)">
+      <option value="en">English</option>
+      <option value="hi">हिंदी</option>
+      <option value="te">తెలుగు</option>
+    </select>
+  </div> -->
+
+  <div class="recommendation-container">
+    <h2 data-key="recommendedTitle">Recommended Crops Based on Your Region</h2>
+    <p id="location-status" data-key="detectingLocation">Detecting your location and weather...</p>
+
+    <!-- Crop Display Card -->
+    <div id="cropCard" class="crop-card hidden">
+      <img id="cropImage" src="" alt="Crop Image">
+      <div class="crop-info">
+        <h3 id="cropName" data-key="cropName">Crop Name</h3>
+        <p><span data-key="bestSeason">Best Season:</span> <span id="weatherType"></span></p>
+        <button class="save-btn" data-key="saveCrop">Save Crop</button>
+      </div>
+    </div>
+
+    <div id="crop-suggestions"></div>
+    <div id="debug-info"></div>
+
+    <!-- Next Button -->
+    <button id="nextBtn" class="next-btn hidden" data-key="next">Next Suggestion</button>
+  </div>
+
+  <!-- Firebase SDK or App JS -->
+  <script type="module" src="../js/crop-sugg.js"></script>
+  <script src="../js/lang.js"></script>
+  <script src="../js/langs.js"></script>
+</body>
+</html>

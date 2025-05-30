@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title data-translate="title">Select Monitoring Features</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #000;
+      background-image: radial-gradient(circle at top left, #1db95433, transparent 60%),
+                        radial-gradient(circle at bottom right, #1db95433, transparent 60%);
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem;
+      min-height: 100vh;
+      margin: 0;
+    }
+
+    h2 {
+      margin-bottom: 2rem;
+      font-size: 2rem;
+      color: #1db954;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 1rem;
+      max-width: 900px;
+      width: 100%;
+    }
+
+    .card {
+      background: #121212;
+      border-radius: 16px;
+      padding: 1rem;
+      text-align: center;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+      border: 1px solid #1db95455;
+      color: white;
+    }
+
+    .card:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 12px #1db95488;
+      background-color: #1b1b1b;
+    }
+
+    .card.selected {
+      background-color: #1db954;
+      color: #000;
+      font-weight: bold;
+    }
+
+    .card img {
+      width: 80px;
+      height: 80px;
+      object-fit: cover;
+      border-radius: 12px;
+      margin-bottom: 0.5rem;
+    }
+
+    .button-container {
+      margin-top: 2rem;
+    }
+
+    button {
+      background-color: #1db954;
+      border: none;
+      padding: 0.8rem 1.5rem;
+      font-size: 1rem;
+      border-radius: 12px;
+      cursor: pointer;
+      color: #000;
+      font-weight: bold;
+      transition: background-color 0.2s ease, transform 0.2s ease;
+    }
+
+    button:hover {
+      background-color: #17a64b;
+      transform: scale(1.05);
+    }
+
+    @media (max-width: 600px) {
+      h2 {
+        font-size: 1.5rem;
+      }
+    }
+
+    .card input[type="checkbox"] {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <h2 data-translate="selectFeatures">Select Monitoring Features</h2>
+
+  <form id="featuresForm">
+    <div class="grid">
+      <label class="card">
+        <input type="checkbox" name="features" value="soilMoisture">
+        🌱<br><span data-translate="soilMoisture">Soil Moisture</span>
+      </label>
+      <label class="card">
+        <input type="checkbox" name="features" value="lightIntensity">
+        💡<br><span data-translate="lightIntensity">Light Intensity</span>
+      </label>
+      <label class="card">
+        <input type="checkbox" name="features" value="humidity">
+        💧<br><span data-translate="humidity">Humidity</span>
+      </label>
+      <label class="card">
+        <input type="checkbox" name="features" value="temperature">
+        🌡️<br><span data-translate="temperature">Temperature</span>
+      </label>
+      <label class="card">
+        <input type="checkbox" name="features" value="gasLevel">
+        🧪<br><span data-translate="gasLevel">Gas Level</span>
+      </label>
+    </div>
+
+    <div class="button-container">
+      <button type="submit" data-translate="next">Next</button>
+    </div>
+  </form>
+
+  <script>
+    const translations = {
+      en: {
+        title: "Select Monitoring Features",
+        selectFeatures: "Select Monitoring Features",
+        soilMoisture: "Soil Moisture",
+        lightIntensity: "Light Intensity",
+        humidity: "Humidity",
+        temperature: "Temperature",
+        gasLevel: "Gas Level",
+        next: "Next"
+      },
+      hi: {
+        title: "मॉनिटरिंग फीचर्स चुनें",
+        selectFeatures: "मॉनिटरिंग फीचर्स चुनें",
+        soilMoisture: "मिट्टी की नमी",
+        lightIntensity: "प्रकाश तीव्रता",
+        humidity: "नमीयत",
+        temperature: "तापमान",
+        gasLevel: "गैस स्तर",
+        next: "अगला"
+      },
+      te: {
+        title: "మానిటరింగ్ ఫీచర్లు ఎంచుకోండి",
+        selectFeatures: "మానిటరింగ్ ఫీచర్లు ఎంచుకోండి",
+        soilMoisture: "మట్టి ఆర్ధ్రత",
+        lightIntensity: "ప్రకాశం తీవ్రత",
+        humidity: "ఆర్ద్రత",
+        temperature: "వెచ్చని స్థాయిని",
+        gasLevel: "వాయువు స్థాయి",
+        next: "తర్వాత"
+      }
+    };
+
+    let currentLang = localStorage.getItem("language") || "en";
+
+    function translatePage() {
+      const elements = document.querySelectorAll("[data-translate]");
+
+      elements.forEach(el => {
+        const key = el.getAttribute("data-translate");
+        if (translations[currentLang] && translations[currentLang][key]) {
+          el.textContent = translations[currentLang][key];
+        }
+      });
+    }
+
+    function setLanguage(lang) {
+      currentLang = lang;
+      localStorage.setItem("language", lang);
+      translatePage();
+    }
+
+    window.onload = translatePage;
+
+    document.querySelectorAll(".card").forEach(card => {
+      card.addEventListener("click", function (e) {
+        const checkbox = this.querySelector('input[type="checkbox"]');
+        checkbox.checked = !checkbox.checked;
+        this.classList.toggle("selected", checkbox.checked);
+        e.preventDefault();
+      });
+    });
+
+    document.getElementById("featuresForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+      const selectedFeatures = [];
+      document.querySelectorAll('input[name="features"]:checked').forEach(function (checkbox) {
+        selectedFeatures.push(checkbox.value);
+      });
+
+      if (selectedFeatures.length === 0) {
+        alert("Please select at least one feature.");
+        return;
+      }
+
+      localStorage.setItem("features", JSON.stringify(selectedFeatures));
+      window.location.href = "field.html";
+    });
+  </script>
+
+  <script>
+    // You can use the below function to change the language as per your requirements
+    // For example, calling setLanguage('hi') will switch to Hindi language
+  </script>
+</body>
+</html>

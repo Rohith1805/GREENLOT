@@ -1,0 +1,362 @@
+:root {
+  --primary:  #07a240;
+  --primary-light: #3ca23f;
+  --text-color: #111;
+  --bg-color: #f5fef5;
+  --card-bg: #ffffff;
+  --card-bg-dark: #1e1e1e;
+  --text-dark: #eee;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  font-family: 'Segoe UI', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+/* Navbar */
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--primary);
+  padding: 1rem 2rem;
+  color: white;
+}
+
+nav .logo-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+nav .logo-title img {
+  height: 40px;
+}
+
+nav .menu {
+  display: flex;
+  gap: 20px;
+}
+
+nav .menu a {
+  color: rgb(255, 255, 255);
+  font-weight: bold;
+  text-decoration: none;
+}
+
+nav .signin-btn,
+nav .profile-name {
+  background-color: white;
+  color: var(--primary);
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+nav .signin-btn:hover,
+nav .profile-name:hover {
+  background-color: var(--primary-light);
+  color: white;
+}
+
+/* Profile Dropdown */
+.profile-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  right: 0;
+  background-color: white;
+  min-width: 160px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  z-index: 1;
+  padding: 10px;
+}
+
+.dropdown-menu a,
+.dropdown-menu button {
+  display: block;
+  padding: 8px 10px;
+  color: var(--primary);
+  text-decoration: none;
+  background: none;
+  border: none;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+}
+
+.dropdown-menu a:hover,
+.dropdown-menu button:hover {
+  background-color: #f0f0f0;
+}
+
+.profile-dropdown:hover .dropdown-menu {
+  display: block;
+}
+
+/* Readings Styling */
+.readings-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 2rem auto;
+}
+
+.reading-card {
+  background-color: var(--card-bg);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  box-shadow: 0 4px 12px rgba(10, 0, 0, 0.1);
+  text-align: center;
+  font-weight: bold;
+  font-size: 1.1rem;
+  transition: all 0.3s ease;
+}
+
+.reading-card:hover {
+  transform: scale(1.02);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.2);
+}
+
+.reading-card .emoji {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.reading-card .value {
+  font-size: 1.3rem;
+  color: var(--primary);
+  margin-top: 0.3rem;
+}
+
+/* Dark Mode */
+.dark-mode {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #000000; /* Spotify dark theme */
+  background-image: radial-gradient(circle at top left, #1db95433, transparent 60%),
+                    radial-gradient(circle at bottom right, #1db95433, transparent 60%);
+  color: white;
+}
+
+.dark-mode body {
+  background-color: var(--bg-color);
+  color: var(--text-dark);
+}
+
+.dark-mode nav {
+  background-color: #1a5c1f;
+}
+
+.dark-mode .dropdown-menu {
+  background-color: #2a2a2a;
+  color: white;
+}
+.profile-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.profile-name {
+  background: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  font-weight: bold;
+  color: #2c7a1b;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  right: 0;
+  background: white;
+  box-shadow: 0px 4px 12px rgba(0,0,0,0.1);
+  padding: 10px;
+  border-radius: 8px;
+  z-index: 99;
+  flex-direction: column;
+}
+
+.profile-dropdown:hover .dropdown-menu {
+  display: flex;
+}
+.menu a.active {
+  position: relative;
+  font-weight: bold;
+}
+.menu a.active::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  width: 100%;
+  height: 3px;
+  background-color: white;
+  border-radius: 2px;
+}
+body.dark-mode .menu a.active::after {
+  background-color: #a0cba0;
+}
+
+.user-profile-container {
+  position: relative;
+}
+.user-profile {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 500;
+  color: white;
+  cursor: pointer;
+}
+.user-profile .fa-user {
+  font-size: 18px;
+}
+.profile-dropdown {
+  position: absolute;
+  top: 40px;
+  right: 0;
+  background-color: white;
+  color: #2d6a4f;
+  min-width: 160px;
+  border-radius: 8px;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+  display: none;
+  flex-direction: column;
+  z-index: 1000;
+}
+.profile-dropdown a,
+.profile-dropdown button {
+  padding: 12px 16px;
+  border: none;
+  background: none;
+  text-align: left;
+  font-size: 14px;
+  color: #2d6a4f;
+  cursor: pointer;
+  width: 100%;
+}
+.profile-dropdown a:hover,
+.profile-dropdown button:hover {
+  background-color: #f1f1f1;
+}
+
+body.dark-mode .profile-dropdown {
+  background-color: #131212;
+  color: #e0e0e0;
+}
+body.dark-mode .profile-dropdown a,
+body.dark-mode .profile-dropdown button {
+  color: #e0e0e0;
+}
+
+.dark-toggle-btn {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: #4caf50;
+  color: #fff;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 14px;
+  cursor: pointer;
+  z-index: 999;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+.dark-mode .dark-toggle-btn {
+  background: #81c784;
+  color: #000;
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #07a240;
+  color: white;
+  padding: 10px 20px;
+}
+
+.menu a {
+  margin: 0 10px;
+  text-decoration: none;
+  color: white;
+  font-weight: 500;
+}
+
+.menu a:hover {
+  text-decoration: underline;
+}
+
+.logo-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logo-title img {
+  height: 30px;
+}
+
+.readings-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  padding: 40px 20px;
+}
+
+.reading-card {
+  background: #f5f5f5;
+  padding: 1rem 2rem;
+  border-radius: 20px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  text-align: center;
+  font-size: 1.1rem;
+  width: 180px;
+}
+
+.reading-card .emoji {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+body.dark-mode .reading-card {
+  background: #2b2b2b;
+  color: #f0f0f0;
+}
+.notification {
+  position: relative;
+}
+
+.notification .fa-bell {
+  font-size: 18px;
+  color: white;
+ 
+}
+
+.notification .dot {
+  height: 8px;
+  width: 8px;
+  background-color: red;
+  border-radius: 50%;
+  position: absolute;
+  top: 0;
+  right: 0;
+}

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sign In - Smart Irrigation</title>
+  <link rel="stylesheet" href="../css/sign.css">
+  <style>
+    .lang-selector {
+      text-align: right;
+      padding: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Language Selector -->
+  <div class="lang-selector">
+    <select id="languageSwitcher" onchange="setLanguage(this.value)">
+      <option value="en">English</option>
+      <option value="hi">हिंदी</option>
+      <option value="te">తెలుగు</option>
+    </select>
+  </div>
+
+  <div class="auth-wrapper">
+    <h2 data-key="signInTitle">Sign In</h2>
+    <input type="text" id="signinPhone" placeholder="+91XXXXXXXXXX" data-placeholder="phonePlaceholder" required />
+    <div id="signin-recaptcha"></div>
+    <button onclick="sendSigninOtp()" data-key="sendOtp">Send OTP</button>
+
+    <div id="otpSection" style="display:none;">
+      <input type="password" id="signinOtp" placeholder="Enter OTP" data-placeholder="enterOtp" />
+      <button onclick="verifySigninOtp()" data-key="verifyOtp">Verify OTP</button>
+    </div>
+
+    <p>
+      <span data-key="dontHaveAccount">Don't have an account?</span>
+      <a href="signup.html" data-key="signUp">Sign Up</a>
+    </p>
+  </div>
+
+  <!-- Include lang.js -->
+  <script src="../js/lang.js"></script>
+
+  <!-- Firebase OTP Script -->
+  <script type="module">
+    // Your Firebase Script Code goes here (refer previous examples)
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
+    import { getAuth, RecaptchaVerifier, signInWithPhoneNumber } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js";
+    import { getDatabase, ref, get, child } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-database.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyB0N7Mur6QbhZ9cOeWJwSZ3PZ-mvK8dQP0",
+      authDomain: "smart-irrigation-f767b.firebaseapp.com",
+      projectId: "smart-irrigation-f767b",
+      storageBucket: "smart-irrigation-f767b.appspot.com",
+      messagingSenderId: "832482451249",
+      appId: "1:832482451249:web:1e6b0b787c81a89b419a10",
+      measurementId: "G-Z5GT8M1BZ1"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getDatabase(app);
+    let confirmationResult = null;
+    let signinRecaptchaVerifier;
+
+    function setupSigninRecaptcha() {
+      if (!signinRecaptchaVerifier) {
+        signinRecaptchaVerifier = new RecaptchaVerifier('signin-recaptcha', {
+          size: 'invisible',
+          callback: () => console.log("Sign-in reCAPTCHA verified")
+        }, auth);
+        signinRecaptchaVerifier.render();
+      }
+    }
+
+    window.sendSigninOtp = () => {
+      const phone = document.getElementById('signinPhone').value.trim();
+
+      if (!phone) {
+        alert("Please enter phone number");
+        return;
+      }
+
+      setupSigninRecaptcha();
+
+      signInWithPhoneNumber(auth, phone, signinRecaptchaVerifier)
+        .then((result) => {
+          confirmationResult = result;
+          document.getElementById('otpSection').style.display = 'block';
+          alert("OTP sent!");
+        })
+        .catch((error) => {
+          alert("Error sending OTP: " + error.message);
+        });
+    };
+
+    window.verifySigninOtp = () => {
+      const otp = document.getElementById('signinOtp').value.trim();
+
+      if (!otp) {
+        alert("Enter the OTP");
+        return;
+      }
+
+      confirmationResult.confirm(otp)
+        .then((result) => {
+          const user = result.user;
+
+          // Fetch user data from database
+          get(child(ref(db), 'users/' + user.uid)).then((snapshot) => {
+            if (snapshot.exists()) {
+              const data = snapshot.val();
+              localStorage.setItem('smartIrrigationLoggedIn', 'true');
+localStorage.setItem('smartIrrigationCurrentUser', JSON.stringify({
+  name: data.name,
+  phone: data.phone
+}));
+alert("Sign-in successful! Redirecting...");
+
+// Give a small delay to ensure localStorage is set
+setTimeout(() => {
+  window.location.href = 'index.html';
+}, 300); // 300ms delay
+            } else {
+              alert("No user data found.");
+            }
+          });
+        })
+        .catch((error) => {
+          alert("Incorrect OTP: " + error.message);
+        });
+    };
+  </script>
+
+</body>
+</html>

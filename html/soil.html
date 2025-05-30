@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title data-translate="title">Select Soil Type</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #000;
+      background-image: radial-gradient(circle at top left, #1db95433, transparent 60%),
+                        radial-gradient(circle at bottom right, #1db95433, transparent 60%);
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem;
+      min-height: 100vh;
+      margin: 0;
+    }
+
+    .top-bar {
+      display: flex;
+      justify-content: flex-end;
+      width: 100%;
+      max-width: 960px;
+      margin-bottom: 1rem;
+    }
+
+    #languageSwitcher {
+      padding: 0.4rem 0.6rem;
+      border-radius: 8px;
+      font-weight: bold;
+      background: #1db954;
+      color: black;
+      border: none;
+    }
+
+    h2 {
+      margin-bottom: 2rem;
+      font-size: 2rem;
+      color: #1db954;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 1rem;
+      max-width: 900px;
+      width: 100%;
+    }
+
+    .card {
+      background: #121212;
+      border-radius: 16px;
+      padding: 1rem;
+      text-align: center;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+      border: 1px solid #1db95455;
+      color: white;
+    }
+
+    .card:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 12px #1db95488;
+      background-color: #1b1b1b;
+    }
+
+    .card.selected {
+      background-color: #1db954;
+      color: #000;
+      font-weight: bold;
+    }
+
+    .card img {
+      width: 80px;
+      height: 80px;
+      object-fit: cover;
+      border-radius: 12px;
+      margin-bottom: 0.5rem;
+    }
+
+    .button-container {
+      margin-top: 2rem;
+    }
+
+    button {
+      background-color: #1db954;
+      border: none;
+      padding: 0.8rem 1.5rem;
+      font-size: 1rem;
+      border-radius: 12px;
+      cursor: pointer;
+      color: #000;
+      font-weight: bold;
+      transition: background-color 0.2s ease, transform 0.2s ease;
+    }
+
+    button:hover {
+      background-color: #17a64b;
+      transform: scale(1.05);
+    }
+
+    @media (max-width: 600px) {
+      h2 {
+        font-size: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="top-bar">
+    <select id="languageSwitcher">
+      <option value="en">English</option>
+      <option value="hi">हिंदी</option>
+      <option value="te">తెలుగు</option>
+    </select>
+  </div>
+
+  <h2 data-translate="selectSoil">Select Your Soil Type</h2>
+
+  <div class="grid" id="soilGrid">
+    <div class="card" data-soil="loamy" data-translate-inner="loamy">
+      <img src="https://th.bing.com/th/id/OIP.m_x02RpSgnstMuvH98AGtAHaE8?w=219&h=180" alt="Loamy Soil">
+      Loamy
+    </div>
+    <div class="card" data-soil="sandy" data-translate-inner="sandy">
+      <img src="https://th.bing.com/th/id/OIP.BpubFEuq1glC3ybEmu80JgHaEP?w=300&h=180" alt="Sandy Soil">
+      Sandy
+    </div>
+    <div class="card" data-soil="clay" data-translate-inner="clay">
+      <img src="https://th.bing.com/th/id/OIP.TKN-hB5Cn1nKMwkRDsk6IwHaEF?w=302&h=180" alt="Clay Soil">
+      Clay
+    </div>
+    <div class="card" data-soil="peat" data-translate-inner="peat">
+      <img src="https://th.bing.com/th/id/OIP.ExN2XCvW4zJlERG_Vtx9SgHaEJ?w=287&h=180" alt="Peat Soil">
+      Peat
+    </div>
+    <div class="card" data-soil="black" data-translate-inner="black">
+      <img src="https://th.bing.com/th/id/OIP.PFdTOCFLsYB6pRlnZjT3rwHaE8?w=237&h=180" alt="Black Soil">
+      Black
+    </div>
+  </div>
+
+  <div class="button-container">
+    <button onclick="saveSoil()" data-translate="next">Next</button>
+  </div>
+
+  <script>
+    const translations = {
+      en: {
+        title: "Select Soil Type",
+        selectSoil: "Select Your Soil Type",
+        loamy: "Loamy",
+        sandy: "Sandy",
+        clay: "Clay",
+        peat: "Peat",
+        black: "Black",
+        next: "Next"
+      },
+      hi: {
+        title: "मिट्टी का प्रकार चुनें",
+        selectSoil: "अपनी मिट्टी का प्रकार चुनें",
+        loamy: "दोमट",
+        sandy: "रेतीली",
+        clay: "चिकनी",
+        peat: "पीट",
+        black: "काली",
+        next: "अगला"
+      },
+      te: {
+        title: "మట్టి రకాన్ని ఎంచుకోండి",
+        selectSoil: "మీ మట్టి రకాన్ని ఎంచుకోండి",
+        loamy: "లోమీ మట్టి",
+        sandy: "సాండీ మట్టి",
+        clay: "క్లే మట్టి",
+        peat: "పీట్ మట్టి",
+        black: "నల్ల మట్టి",
+        next: "తరువాత"
+      }
+    };
+
+    function applyTranslations(lang) {
+      const data = translations[lang];
+      document.querySelectorAll("[data-translate]").forEach(el => {
+        const key = el.getAttribute("data-translate");
+        if (data[key]) el.textContent = data[key];
+      });
+      document.querySelectorAll("[data-translate-inner]").forEach(el => {
+        const key = el.getAttribute("data-translate-inner");
+        if (data[key]) el.innerHTML = `<img src="${el.querySelector('img').src}" alt=""> ${data[key]}`;
+      });
+    }
+
+    let selectedSoil = null;
+    const cards = document.querySelectorAll('.card');
+
+    cards.forEach(card => {
+      card.addEventListener('click', () => {
+        cards.forEach(c => c.classList.remove('selected'));
+        card.classList.add('selected');
+        selectedSoil = card.getAttribute('data-soil');
+      });
+    });
+
+    // function saveSoil() {
+    //   if (!selectedSoil) {
+    //     alert("Please select a soil type.");
+    //     return;
+    //   }
+
+    //   localStorage.setItem("soilType", selectedSoil);
+    //   window.location.href = "crop.html";
+    // }
+    function saveSoil() {
+  if (!selectedSoil) {
+    alert("Please select a soil type.");
+    return;
+  }
+  localStorage.setItem("soilType", selectedSoil);
+  window.location.href = "crop.html";
+}
+
+    const switcher = document.getElementById("languageSwitcher");
+    if (switcher) {
+      const currentLang = localStorage.getItem("lang") || "en";
+      switcher.value = currentLang;
+      applyTranslations(currentLang);
+
+      switcher.addEventListener("change", () => {
+        const selected = switcher.value;
+        localStorage.setItem("lang", selected);
+        applyTranslations(selected);
+      });
+    } else {
+      const fallbackLang = localStorage.getItem("lang") || "en";
+      applyTranslations(fallbackLang);
+    }
+  </script>
+
+
+</body>
+</html>

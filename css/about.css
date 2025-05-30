@@ -1,0 +1,327 @@
+/* Global Styles */
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #f4f4f4;
+    color: #080707;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+/* Navbar */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #00a33e;
+    padding: 10px 20px;
+    /* Remove position: fixed if it's here */
+  }
+  
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 15px;
+}
+
+.nav-links li a {
+    text-decoration: none;
+    color: white;
+    font-weight: 500;
+}
+
+.nav-links a.active-link {
+    border-bottom: 2px solid white;
+    font-weight: bold;
+}
+
+/* Profile Dropdown */
+.profile-section {
+    position: relative;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    right: 0;
+    background-color: white;
+    min-width: 160px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    z-index: 1;
+    border-radius: 6px;
+    padding: 10px;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 8px 10px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+    background-color: #f1f1f1;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/* Toggle Switch */
+.toggle-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 10px;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 36px;
+    height: 20px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    border-radius: 34px;
+    transition: .4s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 14px;
+    width: 14px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+input:checked + .slider {
+    background-color: #00897b;
+}
+
+input:checked + .slider:before {
+    transform: translateX(16px);
+}
+
+/* About, Sensors, and Contact Sections */
+.about-section,
+.sensors-section,
+.contact-section {
+    padding: 40px 20px;
+    max-width: 900px;
+    margin: auto;
+}
+
+.about-section h1,
+.sensors-section h2,
+.contact-section h2 {
+    font-size: 2rem;
+    margin-bottom: 15px;
+    color: #00897b;
+}
+
+.about-section p,
+.contact-section p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+}
+
+/* Sensor Cards */
+.sensor-cards {
+    display: grid;
+    gap: 1.5rem;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    margin-top: 1.5rem;
+}
+
+.sensor-card {
+    background: var(--card-bg, #f3f3f3);
+    padding: 1rem;
+    border-radius: 1rem;
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.sensor-card:hover {
+    transform: scale(1.05);
+}
+
+.sensor-card .icon {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+}
+
+/* Sensor Modal */
+.sensor-modal.hidden {
+    display: none;
+}
+
+.sensor-modal {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+}
+
+.modal-content {
+    background: black;
+    padding: 2rem;
+    border-radius: 1rem;
+    max-width: 500px;
+    width: 90%;
+    position: relative;
+    box-shadow: 0 0 15px rgba(0,0,0,0.3);
+}
+
+.close-btn {
+    position: absolute;
+    top: 10px; right: 15px;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+/* Amazon-Style Footer */
+footer {
+    background-color: #131A22;
+    color: #ccc;
+    padding: 20px 0;
+    font-family: Arial, sans-serif;
+}
+
+.footer-container {
+    max-width: 1200px;
+    margin: auto;
+    text-align: center;
+}
+
+.footer-links a {
+    color: #fff;
+    margin: 0 15px;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.footer-links a:hover {
+    text-decoration: underline;
+}
+
+.footer-social a {
+    color: #fff;
+    margin: 0 10px;
+    font-size: 20px;
+}
+
+.footer-social a:hover {
+    color: #FFD700;
+}
+
+.footer-copyright p {
+    font-size: 12px;
+    margin-top: 10px;
+    color: #bbb;
+}
+
+/* Dark Mode */
+body.dark-mode {
+    background-color: #121212;
+    color: #e0e0e0;
+}
+
+body.dark-mode .navbar {
+    background-color: #196c0a;
+}
+
+body.dark-mode .dropdown-content {
+    background-color: #333;
+    color: white;
+}
+
+body.dark-mode .sensor-card {
+    background-color: #1e1e1e;
+    color: #eee;
+}
+
+/* Language Selector */
+
+
+.lang-selector select {
+    background-color:  #07a240;
+    color: #fff;
+    border: 1px solid #1db954;
+    border-radius: 6px;
+    padding: 0.6rem 1rem;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.lang-selector select:hover {
+    background-color: #1db954;
+    border-color: #1ed760;
+}
+
+.lang-selector select:focus {
+    outline: none;
+    background-color:  #07a240;
+    border-color: #1ed760;
+}
+.language-select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    padding: 8px 12px;
+    background-color: #1e1e1e;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    /* Removed position: fixed */
+    margin-left: auto;
+    margin-right: 20px; /* adjust as needed */
+  }
+  
+  .language-select:hover,
+  .language-select:focus {
+    background-color: #333333;
+    outline: none;
+    top: 0; /* Prevent jumping on hover */
+  }
+  
+  .language-select option {
+    background-color: white;
+    color: black;
+  }
+  

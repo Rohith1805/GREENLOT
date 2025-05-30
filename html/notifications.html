@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Notifications</title>
+  <!-- Firebase App -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<!-- Firebase Realtime Database -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="../css/notifications.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"/>
+  <script src="../js/script.js"></script>
+  <script src="../js/notifications.js"></script>
+  <style>
+    .toast {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #333;
+  color: white;
+  padding: 14px 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 12px rgba(0,0,0,0.3);
+  font-size: 16px;
+  z-index: 9999;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.toast.show {
+  opacity: 1;
+}
+
+.toast.hidden {
+  display: none;
+}
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <a href="index.html" class="back-btn"><i class="fa fa-arrow-left"></i> Back</a>
+    <h1>Notifications</h1>
+  </nav>
+
+  <!-- <main class="notification-container">
+    <div class="notification-box yellow-alert">
+      <i class="fa-solid fa-bolt"></i>
+      Circuit Breakdown detected in Zone A.
+    </div>
+    <div class="notification-box red-alert">
+      <i class="fa-solid fa-paw"></i>
+      Animal Trespassing detected near North Field!
+    </div>
+    <div class="notification-box orange-alert">
+      <i class="fa-solid fa-fire"></i>
+      Fire Breakdown warning in Pump Area.
+    </div>
+    <div class="notification-box blue-alert">
+      <i class="fa-solid fa-water"></i>
+      Water pipe blockage near Sector 3.
+    </div>
+  </main> -->
+  <main class="notification-container" id="notificationList">
+  <!-- Notifications will be loaded here dynamically -->
+</main>
+<div id="popup-toast" class="toast hidden"></div>
+</body>
+</html>

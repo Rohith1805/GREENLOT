@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment - Smart Irrigation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #000;
+            background-image: radial-gradient(circle at top left, #1db95433, transparent 60%),
+                                radial-gradient(circle at bottom right, #1db95433, transparent 60%);
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 450px;
+            background-color: #121212;
+            border-radius: 18px;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.7);
+            border: 1px solid #1db95433;
+        }
+
+        header {
+            text-align: center;
+        }
+
+        h2 {
+            color: #1db954;
+            font-size: 24px;
+            margin-bottom: 0.5rem;
+        }
+
+        p {
+            color: #ccc;
+            font-size: 14px;
+            margin-bottom: 1.5rem;
+        }
+
+        h3 {
+            font-size: 20px;
+            color: #1db954;
+            margin-top: 1.5rem;
+        }
+
+        .form-box {
+            margin-top: 10px;
+        }
+
+        .summary .item {
+            margin-bottom: 20px;
+        }
+
+        .summary .item label {
+            display: block;
+            font-weight: 500;
+            margin-bottom: 6px;
+        }
+
+        .summary .item input {
+            width: 100%;
+            padding: 10px;
+            border-radius: 10px;
+            border: none;
+            background-color: #1b1b1b;
+            color: #fff;
+            box-shadow: inset 0 0 0 1px #1db95455;
+            transition: box-shadow 0.2s ease;
+        }
+
+        .summary .item input:focus {
+            outline: none;
+            box-shadow: 0 0 8px #1db954aa;
+        }
+
+        .payment-options {
+            margin-top: 20px;
+        }
+
+        .payment-options label {
+            font-weight: 500;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .payment-options select {
+            width: 100%;
+            padding: 10px;
+            border-radius: 10px;
+            border: none;
+            background-color: #1b1b1b;
+            color: #fff;
+            box-shadow: inset 0 0 0 1px #1db95455;
+            appearance: none;
+        }
+
+        .btn-container {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .submit-btn {
+            padding: 12px 25px;
+            background-color: #1db954;
+            color: #000;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: background-color 0.2s ease, transform 0.2s ease;
+        }
+
+        .submit-btn:hover {
+            background-color: #17a64b;
+            transform: scale(1.05);
+        }
+
+        #qrModal {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+
+        .qr-backdrop {
+            position: absolute;
+            width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(4px);
+        }
+
+        .qr-popup {
+            position: relative;
+            background: #121212;
+            padding: 30px;
+            border-radius: 16px;
+            z-index: 10000;
+            text-align: center;
+            color: #fff;
+            box-shadow: 0 0 20px #1db95488;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .qr-code {
+            margin-top: 15px;
+            width: 160px;
+            height: 160px;
+            margin-left: auto;
+            margin-right: auto;
+            background-color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .qr-animation {
+            width: 80px;
+            height: 80px;
+            background-image: repeating-linear-gradient(45deg, #1db954 0px, #1db954 10px, #fff 10px, #fff 20px);
+            animation: qrMove 1s infinite linear;
+        }
+
+        .payment-success {
+            font-size: 18px;
+            margin-top: 20px;
+            color: #1db954;
+        }
+
+        @keyframes qrMove {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        @keyframes fadeOut {
+            0% { opacity: 1; }
+            100% { opacity: 0; transform: scale(1.05); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        /* Language Switcher */
+        .language-switcher {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .language-switcher select {
+            background-color: #1db954;
+            color: #fff;
+            padding: 8px 16px;
+            border-radius: 25px;
+            cursor: pointer;
+        }
+
+        .language-switcher select:hover {
+            background-color: #17a64b;
+        }
+    </style>
+</head>
+<body>
+    <div class="language-switcher">
+        <select onchange="changeLanguage(this.value)">
+            <option value="en">English</option>
+            <option value="hi">हिन्दी</option>
+            <option value="te">తెలుగు</option>
+        </select>
+    </div>
+
+    <div class="container">
+        <header>
+            <h2 id="headerTitle">Complete Your Signup</h2>
+            <p id="description">Finalize your details and make the payment</p>
+        </header>
+        <div class="form-box">
+            <form id="paymentForm">
+                <h3 id="paymentSummary">Payment Summary</h3>
+                <div class="summary">
+                    <div class="item">
+                        <label id="fieldSizeLabel" for="fieldSize">Field Size (Acres):</label>
+                        <input type="text" id="fieldSize" name="fieldSize" disabled>
+                    </div>
+                    <div class="item">
+                        <label id="totalPriceLabel" for="totalPrice">Total Price (₹):</label>
+                        <input type="text" id="totalPrice" name="totalPrice" disabled>
+                    </div>
+                </div>
+                <h3 id="paymentMethodLabel">Payment Method</h3>
+                <div class="payment-options">
+                    <label for="paymentMethod" id="paymentMethod">Select Payment Method:</label>
+                    <select id="paymentMethodSelect" name="paymentMethod" required>
+                        <option value="upi">UPI</option>
+                        <option value="phonepe">PhonePe</option>
+                    </select>
+                </div>
+                <div class="btn-container">
+                    <button type="submit" class="submit-btn" id="submitBtn">Proceed to Payment</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <audio id="beepSound" src="https://www.soundjay.com/button/sounds/beep-07a.mp3" preload="auto"></audio>
+    <audio id="successSound" src="https://www.soundjay.com/button/sounds/button-3.mp3" preload="auto"></audio>
+
+    <div id="qrModal" style="display: none;">
+        <div class="qr-backdrop"></div>
+        <div class="qr-popup">
+            <p id="qrText"><strong>Scan to Pay</strong></p>
+            <div class="qr-code">
+                <div class="qr-animation"></div>
+            </div>
+            <p id="qrDetails" style="margin-top: 10px; color: #ccc;"></p> 
+            <p class="payment-success" id="paymentSuccess" style="display: none;">✅ Payment Successful!</p>
+        </div>
+    </div>
+
+    <script>
+        const languageData = {
+            "en": {
+                "headerTitle": "Complete Your Signup",
+                "description": "Finalize your details and make the payment",
+                "paymentSummary": "Payment Summary",
+                "fieldSizeLabel": "Field Size (Acres):",
+                "totalPriceLabel": "Total Price (₹):",
+                "paymentMethod": "Select Payment Method:",
+                "paymentMethodOptions": {
+                    "upi": "UPI",
+                    "phonepe": "PhonePe"
+                },
+                "submitBtn": "Proceed to Payment",
+                "qrText": "Scan to Pay",
+                "paymentSuccess": "✅ Payment Successful!"
+            },
+            "hi": {
+                "headerTitle": "अपना साइनअप पूरा करें",
+                "description": "अपने विवरण को अंतिम रूप दें और भुगतान करें",
+                "paymentSummary": "भुगतान सारांश",
+                "fieldSizeLabel": "क्षेत्र का आकार (एकड़):",
+                "totalPriceLabel": "कुल मूल्य (₹):",
+                "paymentMethod": "भुगतान विधि चुनें:",
+                "paymentMethodOptions": {
+                    "upi": "UPI",
+                    "phonepe": "PhonePe"
+                },
+                "submitBtn": "भुगतान करने के लिए आगे बढ़ें",
+                "qrText": "भुगतान के लिए स्कैन करें",
+                "paymentSuccess": "✅ भुगतान सफल!"
+            },
+            "te": {
+                "headerTitle": "మీ సైన్ అప్ పూర్తి చేయండి",
+                "description": "మీ వివరాలు పూర్తిచేసి చెల్లింపును చేయండి",
+                "paymentSummary": "చెల్లింపు సంక్షిప్తంగా",
+                "fieldSizeLabel": "వ్యవసాయ భూమి పరిమాణం (ఏకరాలు):",
+                "totalPriceLabel": "మొత్తం ధర (₹):",
+                "paymentMethod": "చెల్లింపు విధానాన్ని ఎంచుకోండి:",
+                "paymentMethodOptions": {
+                    "upi": "UPI",
+                    "phonepe": "PhonePe"
+                },
+                "submitBtn": "చెల్లింపు కోసం కొనసాగించండి",
+                "qrText": "చెల్లింపును చేయడానికి స్కాన్ చేయండి",
+                "paymentSuccess": "✅ చెల్లింపు విజయవంతం!"
+            }
+        };
+
+        let currentLang = localStorage.getItem("language") || "en";
+
+        function changeLanguage(lang) {
+            localStorage.setItem("language", lang);
+            currentLang = lang;
+            updateLanguage();
+        }
+
+        function updateLanguage() {
+            const lang = languageData[currentLang];
+
+            document.getElementById("headerTitle").innerText = lang.headerTitle;
+            document.getElementById("description").innerText = lang.description;
+            document.getElementById("paymentSummary").innerText = lang.paymentSummary;
+            document.getElementById("fieldSizeLabel").innerText = lang.fieldSizeLabel;
+            document.getElementById("totalPriceLabel").innerText = lang.totalPriceLabel;
+            document.getElementById("paymentMethod").innerText = lang.paymentMethod;
+            document.getElementById("submitBtn").innerText = lang.submitBtn;
+            document.getElementById("qrText").innerText = lang.qrText;
+            document.getElementById("paymentSuccess").innerText = lang.paymentSuccess;
+
+            const paymentMethodSelect = document.getElementById("paymentMethodSelect");
+            paymentMethodSelect.innerHTML = `<option value="upi">${lang.paymentMethodOptions.upi}</option>
+                                             <option value="phonepe">${lang.paymentMethodOptions.phonepe}</option>`;
+        }
+
+        updateLanguage();
+        document.getElementById("fieldSize").value = localStorage.getItem("fieldSize") || "";
+        document.getElementById("totalPrice").value = localStorage.getItem("totalPrice") || "";
+        document.getElementById("paymentForm").addEventListener("submit", function (e) {
+            e.preventDefault();
+
+            // Show QR Modal
+            const modal = document.getElementById("qrModal");
+            const qrAnim = document.querySelector(".qr-animation");
+            const successText = document.querySelector(".payment-success");
+            const qrDetails = document.getElementById("qrDetails");
+
+            // Dynamic details
+            qrDetails.innerText = `Field Size: ${localStorage.getItem("fieldSize")} acre(s) | ₹${localStorage.getItem("totalPrice")}`;
+
+            modal.style.display = "flex";
+            qrAnim.style.display = "block";
+
+            setTimeout(() => {
+            qrAnim.style.display = "none";
+            successText.style.display = "block";
+
+    // Redirect to home page after 2 seconds
+            setTimeout(() => {
+             window.location.href = "index.html";
+        }, 2000);
+    }, 3000);
+
+        });
+    </script>
+</body>
+</html>

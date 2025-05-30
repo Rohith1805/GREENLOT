@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sign Up - Smart Irrigation</title>
+  <style>
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #0e0e0e;
+    color: #ffffff;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: radial-gradient(circle at top left, #1db95422, transparent 70%);
+  }
+  
+  .auth-wrapper {
+    background-color: #1a1a1a;
+    padding: 2rem;
+    border-radius: 14px;
+    box-shadow: 0 0 18px rgba(30, 215, 96, 0.12);
+    width: 100%;
+    max-width: 320px;
+    text-align: center;
+  }
+  
+  .auth-wrapper h2 {
+    margin-bottom: 1.5rem;
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: #fff;
+  }
+  
+  input {
+    width: 100%;
+    padding: 0.6rem 0.9rem;
+    margin-bottom: 1rem;
+    border: none;
+    border-radius: 6px;
+    background-color: #2a2a2a;
+    color: #fff;
+    font-size: 0.95rem;
+    outline: none;
+    box-sizing: border-box;
+    transition: border 0.2s;
+  }
+  
+  input::placeholder {
+    color: #999;
+  }
+  
+  input:focus {
+    border: 1px solid #1db954;
+    background-color: #2e2e2e;
+  }
+  
+  button {
+    width: 100%;
+    padding: 0.6rem;
+    background-color: #1db954;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    box-sizing: border-box;
+  }
+  
+  button:hover {
+    background-color: #1ed760;
+  }
+  
+  p {
+    margin-top: 1.2rem;
+    font-size: 0.85rem;
+    color: #ccc;
+  }
+  
+  a {
+    color: #1db954;
+    text-decoration: none;
+    font-weight: 500;
+  }
+  
+  a:hover {
+    text-decoration: underline;
+  }
+  /* Language Selector Button Styling */
+  .lang-selector {
+    text-align: right;
+    padding: 10px;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+  }
+  
+  .lang-selector select {
+    background-color: #2a2a2a;
+    color: #fff;
+    border: 1px solid #1db954;
+    border-radius: 6px;
+    padding: 0.6rem 1rem;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+  }
+  
+  .lang-selector select:hover {
+    background-color: #1db954;
+    border-color: #1ed760;
+  }
+  
+  .lang-selector select:focus {
+    outline: none;
+    background-color: #2e2e2e;
+    border-color: #1ed760;
+  }
+  /* Language Selector Button Positioned in Top Right Corner */
+  .lang-selector {
+    position: fixed; /* Fixes it in place on the page */
+    top: 20px; /* 20px from the top of the screen */
+    right: 20px; /* 20px from the right side of the screen */
+    z-index: 999; /* Ensures the button stays above other elements */
+  }
+  
+  .lang-selector select {
+    background-color: #2a2a2a; /* Dark background */
+    color: #fff; /* White text */
+    border: 1px solid #1db954; /* Green border */
+    border-radius: 6px; /* Rounded corners */
+    padding: 0.6rem 1rem; /* Padding for better sizing */
+    font-size: 0.95rem; /* Font size */
+    cursor: pointer; /* Shows pointer cursor on hover */
+    transition: background-color 0.3s ease, border-color 0.3s ease; /* Smooth transitions */
+  }
+  
+  .lang-selector select:hover {
+    background-color: #1db954; /* Green background on hover */
+    border-color: #1ed760; /* Lighter green border on hover */
+  }
+  
+  .lang-selector select:focus {
+    outline: none; /* Removes default outline on focus */
+    background-color: #2e2e2e; /* Slightly lighter background on focus */
+    border-color: #1ed760; /* Lighter green border on focus */
+  }
+  
+  
+  
+  </style>
+</head>
+<body>
+  <!-- Language Selector -->
+  <div class="lang-selector">
+    <select id="languageSelect">
+      <option value="en">English</option>
+      <option value="hi">हिंदी</option>
+      <option value="te">తెలుగు</option>
+    </select>
+  </div>
+
+  <div class="auth-wrapper">
+    <h2 data-key="signup_title">Sign Up</h2>
+    <input type="text" id="signupName" placeholder="Full Name" data-key="placeholder_name" required />
+    <input type="text" id="signupPhone" placeholder="+91XXXXXXXXXX" data-key="placeholder_phone" required />
+    <div id="signup-recaptcha"></div>
+    <button onclick="startSignup()" data-key="btn_send_otp">Send OTP</button>
+
+    <div id="otpSection" style="display:none;">
+      <input type="password" id="signupOtp" placeholder="Enter OTP" data-key="placeholder_otp" />
+      <button onclick="verifySignupOtp()" data-key="btn_verify_otp">Verify OTP</button>
+    </div>
+
+    <p><span data-key="already_account">Already have an account?</span>
+      <a href="signin.html" data-key="signin_link">Sign In</a>
+    </p>
+  </div>
+
+  <!-- Firebase and JS scripts -->
+  <script type="module">
+    // Firebase config
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
+    import {
+      getAuth,
+      RecaptchaVerifier,
+      signInWithPhoneNumber,
+      updateProfile
+    } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js";
+    import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-database.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyB0N7Mur6QbhZ9cOeWJwSZ3PZ-mvK8dQP0",
+      authDomain: "smart-irrigation-f767b.firebaseapp.com",
+      projectId: "smart-irrigation-f767b",
+      storageBucket: "smart-irrigation-f767b.appspot.com",
+      messagingSenderId: "832482451249",
+      appId: "1:832482451249:web:1e6b0b787c81a89b419a10",
+      measurementId: "G-Z5GT8M1BZ1"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getDatabase(app);
+    let confirmationResult = null;
+    let signupRecaptchaVerifier;
+
+    function setupSignupRecaptcha() {
+      if (!signupRecaptchaVerifier) {
+        signupRecaptchaVerifier = new RecaptchaVerifier('signup-recaptcha', {
+          size: 'invisible',
+          callback: () => console.log("Recaptcha verified")
+        }, auth);
+        signupRecaptchaVerifier.render();
+      }
+    }
+
+    window.startSignup = () => {
+      const name = document.getElementById('signupName').value.trim();
+      const phone = document.getElementById('signupPhone').value.trim();
+
+      if (!name || !phone) {
+        alert("Please enter full name and phone number");
+        return;
+      }
+
+      setupSignupRecaptcha();
+
+      signInWithPhoneNumber(auth, phone, signupRecaptchaVerifier)
+        .then((result) => {
+          confirmationResult = result;
+          document.getElementById('otpSection').style.display = 'block';
+          alert("OTP sent!");
+        })
+        .catch((error) => {
+          alert("Error sending OTP: " + error.message);
+        });
+    };
+
+    window.verifySignupOtp = () => {
+      const otp = document.getElementById('signupOtp').value.trim();
+      const name = document.getElementById('signupName').value.trim();
+      const phone = document.getElementById('signupPhone').value.trim();
+
+      if (!otp) {
+        alert("Enter the OTP");
+        return;
+      }
+
+      confirmationResult.confirm(otp)
+        .then((result) => {
+          const user = result.user;
+
+          updateProfile(user, { displayName: name }).then(() => {
+            return user.reload();
+          }).then(() => {
+            set(ref(db, 'users/' + user.uid), { name, phone });
+            localStorage.setItem('smartIrrigationLoggedIn', 'true');
+            localStorage.setItem('smartIrrigationCurrentUser', JSON.stringify({ name, phone }));
+            alert("Signup successful!");
+            window.location.href = 'farmer.html';
+          });
+        })  
+        .catch((error) => {
+          alert("Incorrect OTP: " + error.message);
+        });
+    };
+
+    // Language switcher logic
+    const langs = {
+      en: {
+        signup_title: "Sign Up",
+        placeholder_name: "Full Name",
+        placeholder_phone: "+91XXXXXXXXXX",
+        btn_send_otp: "Send OTP",
+        placeholder_otp: "Enter OTP",
+        btn_verify_otp: "Verify OTP",
+        already_account: "Already have an account?",
+        signin_link: "Sign In"
+      },
+      hi: {
+        signup_title: "साइन अप करें",
+        placeholder_name: "पूरा नाम",
+        placeholder_phone: "+91XXXXXXXXXX",
+        btn_send_otp: "ओटीपी भेजें",
+        placeholder_otp: "ओटीपी दर्ज करें",
+        btn_verify_otp: "ओटीपी सत्यापित करें",
+        already_account: "पहले से एक खाता है?",
+        signin_link: "साइन इन करें"
+      },
+      te: {
+        signup_title: "సైన్ అప్",
+        placeholder_name: "పూర్తి పేరు",
+        placeholder_phone: "+91XXXXXXXXXX",
+        btn_send_otp: "ఓటిపి పంపు",
+        placeholder_otp: "ఓటిపి నమోదు చేయండి",
+        btn_verify_otp: "ఓటిపి ధృవీకరించండి",
+        already_account: "ఇప్పటికే ఖాతా ఉందా?",
+        signin_link: "సైన్ ఇన్"
+      }
+    };
+
+    function setLanguage(lang) {
+      const translations = langs[lang];
+      document.querySelectorAll('[data-key]').forEach(element => {
+        const key = element.getAttribute('data-key');
+        if (translations[key]) {
+          if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
+            element.placeholder = translations[key];
+          } else {
+            element.innerText = translations[key];
+          }
+        }
+      });
+    }
+
+    // Load and apply saved language
+    const savedLang = localStorage.getItem('language') || 'en';
+    document.getElementById('languageSelect').value = savedLang;
+    setLanguage(savedLang);
+
+    // When user changes language
+    document.getElementById('languageSelect').addEventListener('change', (e) => {
+      const selectedLang = e.target.value;
+      localStorage.setItem('language', selectedLang);
+      setLanguage(selectedLang);
+    });
+  </script>
+</body>
+</html>

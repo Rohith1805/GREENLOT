@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Seed Firestore Crop Data</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background: #111;
+      color: #0f0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <h2>Checking and seeding missing crops...</h2>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
+    import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyB0N7Mur6QbhZ9cOeWJwSZ3PZ-mvK8dQP0",
+      authDomain: "smart-irrigation-f767b.firebaseapp.com",
+      projectId: "smart-irrigation-f767b",
+      storageBucket: "smart-irrigation-f767b.appspot.com",
+      messagingSenderId: "832482451249",
+      appId: "1:832482451249:web:1e6b0b787c81a89b419a10",
+      measurementId: "G-Z5GT8M1BZ1"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    async function seedMissingCrops() {
+      const cropRef = collection(db, "crops");
+      const snapshot = await getDocs(cropRef);
+      const existingNames = snapshot.docs.map(doc => doc.data().name.toLowerCase());
+
+      const crops = [
+        {
+          name: "Wheat",
+          soil: ["loamy", "clayey"],
+          weather: ["cool"],
+          image: "https://th.bing.com/th/id/OIP._61-7Po4LJNhh_yN1z-pVgHaFs?w=246&h=189&c=7&r=0&o=5&dpr=1.3&pid=1.7"
+        },
+        {
+          name: "Rice",
+          soil: ["clayey"],
+          weather: ["humid"],
+          image: "https://th.bing.com/th/id/OIP.OPN4yLIi1_1YaZsNcn7Y4wHaFc?w=275&h=203&c=7&r=0&o=5&dpr=1.3&pid=1.7"
+        },
+        {
+          name: "Maize",
+          soil: ["sandy", "loamy"],
+          weather: ["moderate"],
+          image: "https://th.bing.com/th/id/OIP.dU1Sh_yvLcmh10m8OiT-BwHaE-?w=234&h=180&c=7&r=0&o=5&dpr=1.3&pid=1.7"
+        },
+        {
+          name: "Sugarcane",
+          soil: ["clayey", "loamy"],
+          weather: ["hot"],
+          image: "https://th.bing.com/th/id/OIP.WZu9EGc2qHy4M58S3Tfz0QHaEy?w=305&h=195&c=7&r=0&o=5&dpr=1.3&pid=1.7"
+        },
+        {
+          name: "Chilli",
+          soil: ["sandy", "loamy"],
+          weather: ["hot", "cloudy"],
+          image: "https://th.bing.com/th/id/OIP.wIPo-_WFhCFZTiptlbfxjgHaFj?w=259&h=194&c=7&r=0&o=5&dpr=1.3&pid=1.7"
+        }
+      ];
+
+      let added = 0;
+
+      for (const crop of crops) {
+        if (!existingNames.includes(crop.name.toLowerCase())) {
+          await addDoc(cropRef, crop);
+          console.log(`✅ Added missing crop: ${crop.name}`);
+          added++;
+        } else {
+          console.log(`ℹ️ Already exists: ${crop.name}`);
+        }
+      }
+
+      document.querySelector("h2").textContent =
+        added > 0
+          ? `✅ ${added} new crop(s) added successfully!`
+          : "ℹ️ All crops already exist. No action taken.";
+    }
+
+    seedMissingCrops();
+  </script>
+  <script src="../js/lang.js"></script>
+</body>
+</html>

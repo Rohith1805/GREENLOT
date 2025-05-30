@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profile - Smart Irrigation</title>
+  <link rel="stylesheet" href="../css/navbar.css">
+  <link rel="stylesheet" href="../css/profile.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"/>
+</head>
+<body>
+  <nav>
+    <div class="logo-title">
+      <img src="../exgreenlot/public/leaf-icon.jpeg" alt="Logo" />
+      <h2 data-key="navbarTitle">Smart Irrigation</h2>
+    </div>
+
+    <div class="menu">
+      <a href="index.html" data-key="home">Home</a>
+      <a href="about.html" data-key="about">About Us</a>
+      <a href="readings.html" data-key="readings">Readings</a>
+      <a href="history.html" data-key="history">History</a>
+      <a href="control.html" data-key="control">Control</a>
+      <a href="news.html" data-key="news">News</a>
+    </div>
+    <div class="lang-selector">
+      <select id="languageSwitcher" onchange="switchLanguage(event)">
+        <option value="en">English</option>
+        <option value="hi">हिंदी</option>
+        <option value="te">తెలుగు</option>
+      </select>
+    </div>
+
+    <div id="profileSection">
+      <!-- Will be populated by script.js -->
+    </div>
+  </nav>
+
+  <div class="profile-container">
+    <div class="profile-card">
+      <div class="profile-header">
+        <div class="profile-avatar">
+          <i class="fa-solid fa-user-circle"></i>
+        </div>
+        <h2 id="profileName">User Name</h2>
+      </div>
+      
+      <div class="profile-details">
+        <div class="detail-item">
+          <span class="detail-label">Crop Type:</span>
+          <span class="detail-value" id="cropType">Rice</span>
+          <button class="edit-btn" data-field="cropType"><i class="fa-solid fa-pen"></i></button>
+        </div>
+        
+        <div class="detail-item">
+          <span class="detail-label">Soil Type:</span>
+          <span class="detail-value" id="soilType">Clay Loam</span>
+          <button class="edit-btn" data-field="soilType"><i class="fa-solid fa-pen"></i></button>
+        </div>
+        
+        <div class="detail-item">
+          <span class="detail-label">Farmer Type:</span>
+          <span class="detail-value" id="farmerType">Small Scale</span>
+          <button class="edit-btn" data-field="farmerType"><i class="fa-solid fa-pen"></i></button>
+        </div>
+        
+        <div class="detail-item">
+          <span class="detail-label">Monthly Cost:</span>
+          <span class="detail-value" id="monthlyCost">₹2,500</span>
+          <button class="edit-btn" data-field="monthlyCost"><i class="fa-solid fa-pen"></i></button>
+        </div>
+      </div>
+      
+      <div class="profile-actions">
+        <button id="settingsBtn"><i class="fa-solid fa-gear"></i> Settings</button>
+        <button id="darkModeToggle"><i class="fa-solid fa-moon"></i> <span id="themeText">Dark Mode</span></button>
+        <button id="logoutButton"><i class="fa-solid fa-sign-out-alt"></i> Logout</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Edit Field Modal -->
+  <div id="editModal" class="modal">
+    <div class="modal-content">
+      <span class="close-modal">&times;</span>
+      <h3>Edit <span id="fieldLabel">Field</span></h3>
+      <input type="text" id="fieldInput" placeholder="Enter new value">
+      <button id="saveFieldBtn">Save Changes</button>
+    </div>
+  </div>
+
+  <script src="../js/lang.js"></script>
+  <script src="../js/profile.js"></script>
+</body>
+</html>

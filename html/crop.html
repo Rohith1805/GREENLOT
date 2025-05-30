@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title data-key="title">Select Crop Type</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #000;
+      background-image: radial-gradient(circle at top left, #1db95433, transparent 60%),
+                        radial-gradient(circle at bottom right, #1db95433, transparent 60%);
+      color: white;
+    }
+    .lang-selector {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      z-index: 999;
+    }
+    .lang-selector select {
+      padding: 5px 10px;
+      border-radius: 6px;
+      font-size: 14px;
+    }
+
+    .container {
+      background-color: rgba(0, 0, 0, 0.6);
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 0 25px rgba(0, 255, 0, 0.2);
+      max-width: 1000px;
+      margin: auto;
+      text-align: center;
+    }
+
+    h2 {
+      color: #38d65c;
+      margin-bottom: 40px;
+      font-size: 32px;
+    }
+
+    .card-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 30px;
+    }
+
+    .card {
+      background-color: #111;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 0 15px rgba(0, 255, 0, 0.1);
+      text-align: center;
+      width: 150px;
+      transition: 0.3s ease;
+      cursor: pointer;
+    }
+
+    .card:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
+    }
+
+    .card img {
+      width: 100%;
+      border-radius: 8px;
+      height: 100px;
+      object-fit: cover;
+      margin-bottom: 10px;
+    }
+
+    .card p {
+      color: white;
+      margin: 0;
+      font-size: 16px;
+    }
+
+    .next-btn {
+      margin-top: 30px;
+      padding: 12px 25px;
+      background-color: #00c851;
+      color: white;
+      border: none;
+      border-radius: 25px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .next-btn:hover {
+      background-color: #00e676;
+      box-shadow: 0 0 10px rgba(0, 255, 0, 0.4);
+    }
+
+    .selected {
+      border: 2px solid #00e676;
+      box-shadow: 0 0 15px rgba(0, 255, 0, 0.5);
+    }
+  </style>
+</head>
+<body>
+  <!-- Language Selector -->
+  <div class="lang-selector">
+    <select id="languageSelect">
+      <option value="en">English</option>
+      <option value="hi">हिंदी</option>
+      <option value="te">తెలుగు</option>
+    </select>
+  </div>
+
+  <div class="container">
+    <h2 data-key="title">Select Your Crop Type</h2>
+    <form id="cropForm">
+      <div class="card-grid">
+        <div class="card" data-crop="wheat">
+          <img src="https://th.bing.com/th/id/OIP._61-7Po4LJNhh_yN1z-pVgHaFs?w=246&h=189&c=7&r=0&o=5&dpr=1.3&pid=1.7" alt="Wheat">
+          <p data-key="wheat">Wheat</p>
+        </div>
+        <div class="card" data-crop="rice">
+          <img src="https://th.bing.com/th/id/OIP.OPN4yLIi1_1YaZsNcn7Y4wHaFc?w=275&h=203&c=7&r=0&o=5&dpr=1.3&pid=1.7" alt="Rice">
+          <p data-key="rice">Rice</p>
+        </div>
+        <div class="card" data-crop="corn">
+          <img src="https://th.bing.com/th/id/OIP.dU1Sh_yvLcmh10m8OiT-BwHaE-?w=234&h=180&c=7&r=0&o=5&dpr=1.3&pid=1.7" alt="Corn">
+          <p data-key="corn">Corn</p>
+        </div>
+        <div class="card" data-crop="cotton">
+          <img src="https://th.bing.com/th/id/OIP.Dbdjw3oMaD7gUc2Pb4KvoQHaE9?w=272&h=182&c=7&r=0&o=5&dpr=1.3&pid=1.7" alt="Cotton">
+          <p data-key="cotton">Cotton</p>
+        </div>
+        <div class="card" data-crop="sugarcane">
+          <img src="https://th.bing.com/th/id/OIP.WZu9EGc2qHy4M58S3Tfz0QHaEy?w=305&h=195&c=7&r=0&o=5&dpr=1.3&pid=1.7" alt="Sugarcane">
+          <p data-key="sugarcane">Sugarcane</p>
+        </div>
+        <div class="card" data-crop="chilli">
+          <img src="https://th.bing.com/th/id/OIP.wIPo-_WFhCFZTiptlbfxjgHaFj?w=259&h=194&c=7&r=0&o=5&dpr=1.3&pid=1.7" alt="Chilli">
+          <p data-key="chilli">Chilli</p>
+        </div>
+      </div>
+      <button type="submit" class="next-btn" data-key="btn_next">Next</button>
+    </form>
+  </div>
+
+  <script>
+    const cards = document.querySelectorAll('.card');
+    let selectedCrop = null;
+
+    cards.forEach(card => {
+      card.addEventListener('click', () => {
+        cards.forEach(c => c.classList.remove('selected'));
+        card.classList.add('selected');
+        selectedCrop = card.dataset.crop;
+      });
+    });
+
+    document.getElementById("cropForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      if (!selectedCrop) {
+        alert("Please select a crop.");
+        return;
+      }
+      localStorage.setItem("cropType", selectedCrop);
+      window.location.href = "features.html";
+    });
+
+
+    // Language logic
+    const langs = {
+      en: {
+        title: "Select Your Crop Type",
+        wheat: "Wheat",
+        rice: "Rice",
+        corn: "Corn",
+        cotton: "Cotton",
+        sugarcane: "Sugarcane",
+        chilli: "Chilli",
+        btn_next: "Next"
+      },
+      hi: {
+        title: "फसल प्रकार चुनें",
+        wheat: "गेहूं",
+        rice: "चावल",
+        corn: "मक्का",
+        cotton: "कपास",
+        sugarcane: "गन्ना",
+        chilli: "मिर्च",
+        btn_next: "आगे"
+      },
+      te: {
+        title: "పంట రకాన్ని ఎంచుకోండి",
+        wheat: "గోధుమలు",
+        rice: "బియ్యం",
+        corn: "మొక్కజొన్న",
+        cotton: "పత్తి",
+        sugarcane: "చెక్కెరకందులు",
+        chilli: "మిరపకాయలు",
+        btn_next: "తర్వాత"
+      }
+    };
+
+    function setLanguage(lang) {
+      const translation = langs[lang];
+      document.querySelectorAll('[data-key]').forEach(el => {
+        const key = el.getAttribute('data-key');
+        if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+          el.placeholder = translation[key] || el.placeholder;
+        } else {
+          el.textContent = translation[key] || el.textContent;
+        }
+      });
+    }
+
+    const savedLang = localStorage.getItem('language') || 'en';
+    document.getElementById('languageSelect').value = savedLang;
+    setLanguage(savedLang);
+
+    document.getElementById('languageSelect').addEventListener('change', e => {
+      const selectedLang = e.target.value;
+      localStorage.setItem('language', selectedLang);
+      setLanguage(selectedLang);
+    });
+    
+  </script>
+ 
+
+</body>
+</html>

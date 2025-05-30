@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title data-key="title">Select Farmer Type</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #0e0e0e;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      background-image: radial-gradient(circle at top left, #1db95422, transparent 70%);
+    }
+
+    .container {
+      text-align: center;
+      padding: 2rem;
+      position: relative;
+    }
+
+    h2 {
+      font-size: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .card-container {
+      display: flex;
+      gap: 2rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .card {
+      background: #121212;
+      border-radius: 12px;
+      padding: 1.5rem;
+      width: 260px;
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+      text-align: center;
+      border: 1px solid #1db95444;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 24px rgba(30, 215, 96, 0.3);
+      border-color: #1db954;
+    }
+
+    .card img {
+      width: 80px;
+      height: 80px;
+      object-fit: contain;
+      margin-bottom: 1rem;
+      filter: brightness(1.2);
+    }
+
+    .card h3 {
+      margin-bottom: 0.5rem;
+      font-size: 1.2rem;
+      color: #1db954;
+    }
+
+    .card p {
+      font-size: 0.95rem;
+      color: #ccc;
+    }
+
+    .language-switcher {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+    }
+
+    .lang-btn {
+      background-color: #00897b;
+      color: #fff;
+      border: none;
+      padding: 6px 12px;
+      font-size: 0.9rem;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-left: 5px;
+    }
+
+    .lang-btn:hover {
+      background-color: #00796b;
+    }
+
+    .lang-btn.active {
+      background-color: #004d40;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <!-- Language Switcher -->
+    <!-- <div class="language-switcher">
+      <button class="lang-btn" onclick="switchLanguage('en')">English</button>
+      <button class="lang-btn" onclick="switchLanguage('hi')">हिंदी</button>
+      <button class="lang-btn" onclick="switchLanguage('te')">తెలుగు</button>
+    </div> -->
+
+    <h2 data-key="heading">Select Your Farmer Type</h2>
+
+    <div class="card-container">
+      <div class="card" onclick="selectFarmerType('Experienced')">
+        <img src="../exgreenlot/public/ex-farmer.png" alt="Experienced Logo" />
+        <h3 data-key="experienced">Experienced Farmer</h3>
+        <p data-key="exp_desc">Get advanced tools and customization options.</p>
+      </div>
+      <div class="card" onclick="selectFarmerType('New')">
+        <img src="../exgreenlot/public/small-farmer.png" alt="New Logo" />
+        <h3 data-key="new">New Farmer</h3>
+        <p data-key="new_desc">Start with guided steps and crop suggestions.</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function selectFarmerType(type) {
+      localStorage.setItem('farmerType', type);
+      if (type === 'Experienced') {
+        window.location.href = 'soil.html';
+      } else if (type === 'New') {
+        window.location.href = 'crop-sugg.html';
+      }
+    }
+  </script>
+
+  <script src="../js/langs.js"></script>
+  <script src="../js/lang.js"></script>
+
+</body>
+</html>

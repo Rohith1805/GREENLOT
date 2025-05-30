@@ -1,0 +1,112 @@
+body {
+  background: linear-gradient(to right, #000000, #0f9d58);
+  color: #ffffff;
+  font-family: 'Segoe UI', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.recommendation-container {
+  max-width: 600px;
+  margin: 60px auto;
+  background: #1c1c1e;
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+  text-align: center;
+  transition: all 0.3s ease-in-out;
+}
+
+.recommendation-container h2 {
+  font-size: 26px;
+  color: #00e676;
+  margin-bottom: 12px;
+}
+
+.recommendation-container p {
+  font-size: 15px;
+  color: #ccc;
+  margin-bottom: 25px;
+}
+
+.crop-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.crop-card {
+  background-color: #2e2e2e;
+  border-radius: 12px;
+  padding: 1rem;
+  border: 1px solid #00e676;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.3);
+  width: 220px;
+  text-align: center;
+  transition: transform 0.3s;
+}
+
+.crop-card:hover {
+  transform: scale(1.03);
+}
+
+.crop-card img {
+  max-width: 100%;
+  height: 140px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+#cropName {
+  font-size: 20px;
+  color: #00e676;
+  font-weight: bold;
+}
+
+#cropSeason {
+  font-size: 14px;
+  color: #cccccc;
+}
+
+button {
+  padding: 12px 24px;
+  margin: 10px 6px;
+  border: none;
+  border-radius: 8px;
+  background-color: #00e676;
+  color: #000;
+  font-weight: bold;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #00c853;
+}
+
+.hidden {
+  display: none;
+}
+.next-btn {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #4CAF50;
+  border: none;
+  color: white;
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.next-btn:hover {
+  background-color: #45a049;
+}
+
+.hidden {
+  display: none;
+}

@@ -1,0 +1,40 @@
+.notification-container {
+    max-width: 800px;
+    margin: 100px auto 40px;
+    padding: 20px;
+  }
+  
+  .notification-box {
+    border-radius: 10px;
+    padding: 15px 20px;
+    margin-bottom: 20px;
+    color: #fff;
+    font-weight: bold;
+    font-size: 1rem;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .notification-box i {
+    font-size: 1.5rem;
+  }
+  
+  .yellow-alert {
+    background-color: #f1c40f;
+    color: #000;
+  }
+  
+  .red-alert {
+    background-color: #e74c3c;
+  }
+  
+  .orange-alert {
+    background-color: #e67e22;
+  }
+  
+  .blue-alert {
+    background-color: #3498db;
+  }
+  

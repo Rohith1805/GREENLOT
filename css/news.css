@@ -1,0 +1,233 @@
+body {
+  font-family: 'Segoe UI', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f5f5f5;
+  color: #333;
+  transition: background 0.3s, color 0.3s;
+}
+
+/* Dark Mode Support */
+body.dark-mode {
+  background-color: #000; /* Spotify dark theme */
+  background-image: radial-gradient(circle at top left, #1db95433, transparent 60%),
+                    radial-gradient(circle at bottom right, #1db95433, transparent 60%);
+  color: white;
+}
+
+/* Navigation Bar */
+nav {
+  background: #07a240;
+  color: white;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.logo-title {
+  display: flex;
+  align-items: center;
+}
+
+.logo-title img {
+  height: 40px;
+  margin-right: 10px;
+}
+
+.menu a {
+  margin: 0 10px;
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.menu a:hover {
+  text-decoration: underline;
+}
+
+.menu a.active {
+  position: relative;
+  font-weight: bold;
+}
+
+.menu a.active::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  width: 100%;
+  height: 3px;
+  background-color: white;
+  border-radius: 2px;
+}
+
+body.dark-mode .menu a.active::after {
+  background-color: #148e14;
+}
+
+/* News Section */
+.news-section {
+  padding: 30px;
+}
+
+.news-container {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+.news-card {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background-color: #fff;
+  padding: 0;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s;
+}
+
+.news-card:hover {
+  transform: translateY(-5px);
+}
+
+.news-image {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+}
+
+.news-content {
+  padding: 20px;
+}
+
+.news-card h3 {
+  font-size: 18px;
+  margin: 0 0 10px;
+}
+
+.news-card p {
+  font-size: 14px;
+  margin: 10px 0;
+}
+
+.news-card a {
+  text-decoration: none;
+  color: #4caf50;
+  font-weight: bold;
+}
+
+body.dark-mode .news-card {
+  background: #000000;
+  color: white;
+}
+
+body.dark-mode .news-card a {
+  color: #90ee90;
+}
+
+/* Published Time */
+.published-time {
+  display: block;
+  color: #777;
+  margin: 5px 0;
+  font-size: 0.85rem;
+}
+
+body.dark-mode .published-time {
+  color: #ccc;
+}
+
+/* Loader */
+.loader {
+  text-align: center;
+  font-weight: bold;
+  font-size: 1.2rem;
+  margin: 2rem auto;
+  color: #4caf50;
+}
+
+body.dark-mode .loader {
+  color: #90ee90;
+}
+
+/* Profile Section */
+.profile-btn {
+  background: transparent;
+  color: inherit;
+  border: none;
+  font-weight: 600;
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.profile-btn:hover {
+  background-color: rgba(255,255,255,0.1);
+}
+
+body.dark-mode .profile-btn:hover {
+  background-color: rgba(255,255,255,0.1);
+}
+
+/* Dropdown Menu */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  right: 0;
+  background-color: var(--dropdown-bg, #fff);
+  color: var(--dropdown-text, #000);
+  min-width: 160px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  border-radius: 8px;
+  z-index: 1100;
+  flex-direction: column;
+}
+
+.dropdown-content a,
+.dropdown-content button {
+  color: inherit;
+  padding: 10px 16px;
+  text-decoration: none;
+  display: block;
+  background: none;
+  border: none;
+  text-align: left;
+  font: inherit;
+  cursor: pointer;
+}
+
+.dropdown-content a:hover,
+.dropdown-content button:hover {
+  background-color: rgba(0,0,0,0.05);
+}
+
+body.dark-mode .dropdown-content a:hover,
+body.dark-mode .dropdown-content button:hover {
+  background-color: rgba(255,255,255,0.05);
+}
+
+.profile-dropdown.show-content {
+  display: flex;
+}
+
+/* Sign In Button */
+.signin-btn {
+  background-color: white;
+  color: #2a2a2a;
+  padding: 8px 14px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+body.dark-mode .signin-btn {
+  background-color: #444;
+  color: white;
+}

@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title data-translate="title">Enter Field Size</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #000;
+      background-image: radial-gradient(circle at top left, #1db95433, transparent 60%),
+                        radial-gradient(circle at bottom right, #1db95433, transparent 60%);
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .container {
+      background: #121212;
+      padding: 2rem 2.5rem;
+      border-radius: 16px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+      text-align: center;
+      border: 1px solid #1db95455;
+    }
+
+    h2 {
+      color: #1db954;
+      margin-bottom: 1.5rem;
+      font-size: 1.5rem;
+    }
+
+    input[type="number"] {
+      margin-top: 1rem;
+      padding: 0.8rem;
+      font-size: 1rem;
+      border-radius: 12px;
+      border: none;
+      width: 100%;
+      max-width: 250px;
+      background-color: #1b1b1b;
+      color: #fff;
+      outline: none;
+      box-shadow: inset 0 0 0 1px #1db954;
+      transition: box-shadow 0.2s ease;
+    }
+
+    input[type="number"]:focus {
+      box-shadow: 0 0 8px #1db954aa;
+    }
+
+    button {
+      background-color: #1db954;
+      border: none;
+      margin-top: 1.5rem;
+      cursor: pointer;
+      padding: 0.8rem 1.5rem;
+      font-size: 1rem;
+      font-weight: bold;
+      color: #000;
+      border-radius: 12px;
+      transition: background-color 0.2s ease, transform 0.2s ease;
+    }
+
+    button:hover {
+      background-color: #17a64b;
+      transform: scale(1.05);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2 data-translate="enterFieldSize">Enter Field Size (in acres)</h2>
+    <input type="number" id="fieldSize" min="1" max="100" placeholder="1 to 100 acres">
+    <br>
+    <button onclick="saveFieldSize()" data-translate="next">Next</button>
+  </div>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
+
+<script>
+  const firebaseConfig = {
+    apiKey: "AIzaSyBSzBnOxpLTqKiNbNIxQRbZiYcGG0z6QcI",
+  authDomain: "smart-irrigation-fbefa.firebaseapp.com",
+  databaseURL: "https://smart-irrigation-fbefa-default-rtdb.firebaseio.com",
+  projectId: "smart-irrigation-fbefa",
+  storageBucket: "smart-irrigation-fbefa.firebasestorage.app",
+  messagingSenderId: "936444362857",
+  appId: "1:936444362857:web:8146a60a676223a258e2f8",
+  measurementId: "G-2LKSWZW659"
+  };
+  firebase.initializeApp(firebaseConfig);
+</script>
+  <script>
+//     function saveFieldSize() {
+//   const size = parseInt(document.getElementById("fieldSize").value);
+//   if (!size || size < 1 || size > 100) {
+//     alert("Please enter a valid field size between 1 and 100 acres.");
+//     return;
+//   }
+//   const pricePerAcre = 1000; // you can change this if needed
+//   const totalPrice = size * pricePerAcre;
+//   localStorage.setItem('fieldSize', size);
+
+//   localStorage.setItem('totalPrice', totalPrice); 
+//   window.location.href = 'payment.html'; // or your next page
+// }
+// function saveFieldSize() {
+//   const size = parseInt(document.getElementById("fieldSize").value);
+//   if (!size || size < 1 || size > 100) {
+//     alert("Please enter a valid field size between 1 and 100 acres.");
+//     return;
+//   }
+
+//   const pricePerAcre = 1000;
+//   const totalPrice = size * pricePerAcre;
+
+//   // Save to localStorage
+//   localStorage.setItem('fieldSize', size);
+//   localStorage.setItem('totalPrice', totalPrice);
+
+//   // Save to Firebase
+//   const user = firebase.auth().currentUser;
+//   if (user) {
+//     const historyData = {
+//       cropType: localStorage.getItem("cropType") || "Not selected",
+//       soilType: localStorage.getItem("soilType") || "Not selected",
+//       fieldSize: size + " acres",
+//       timestamp: new Date().toLocaleString(),
+//       serverTimestamp: firebase.database.ServerValue.TIMESTAMP
+//     };
+
+//     // firebase.database().ref('history/' + user.uid).push(historyData)
+//     firebase.database().ref('history').push(historyData)
+//       .then(() => {
+//         console.log("History saved successfully");
+//         window.location.href = 'payment.html'; // redirect after successful save
+//       })
+//       .catch(error => {
+//         console.error("Error saving history:", error);
+//         window.location.href = 'payment.html'; // still redirect if error occurs
+//       });
+//   } else {
+//     // If user is not authenticated, just continue to payment page
+//     window.location.href = 'payment.html';
+//   }
+// }
+// async function saveFieldSize() {
+//   const size = parseInt(document.getElementById("fieldSize").value);
+//   if (!size || size < 1 || size > 100) {
+//     alert("Please enter a valid field size between 1 and 100 acres.");
+//     return;
+//   }
+
+//   const pricePerAcre = 1000;
+//   const totalPrice = size * pricePerAcre;
+
+//   // Save to localStorage
+//   localStorage.setItem('fieldSize', size);
+//   localStorage.setItem('totalPrice', totalPrice);
+
+//   // Get current user
+//   const user = firebase.auth().currentUser;
+//   if (!user) {
+//     console.error("No user logged in");
+//     window.location.href = 'payment.html';
+//     return;
+//   }
+
+//   try {
+//     // Save complete user selections
+//     const selections = {
+//       crop: localStorage.getItem("cropType") || "Not selected",
+//       soil: localStorage.getItem("soilType") || "Not selected",
+//       field: size,
+//       timestamp: new Date().toISOString()
+//     };
+
+//     // Save to user's private data
+//     await firebase.database().ref("users/" + user.uid + "/selections").set(selections);
+    
+//     // Save to global history (optional)
+//     await firebase.database().ref('history').push({
+//       ...selections,
+//       userId: user.uid, // Reference to user who created this
+//       userName: (await firebase.database().ref('users/' + user.uid + '/name').once('value')).val()
+//     });
+
+//     console.log("All data saved successfully");
+//     window.location.href = 'payment.html';
+    
+//   } catch (error) {
+//     console.error("Error saving data:", error);
+//     alert("Data saving failed, but you can continue to payment.");
+//     window.location.href = 'payment.html';
+//   }
+// }
+// This function should be called after the final input (e.g., crop selection)
+// Save to localStorage
+function saveFieldSize(){
+    const size = parseInt(document.getElementById("fieldSize").value);
+  if (!size || size < 1 || size > 100) {
+    alert("Please enter a valid field size between 1 and 100 acres.");
+    return;
+  }
+
+  const pricePerAcre = 1000;
+  const totalPrice = size * pricePerAcre;
+localStorage.setItem('fieldSize', size);
+localStorage.setItem('totalPrice', totalPrice);
+
+// Build the record
+const newRecord = {
+  crop: localStorage.getItem("cropType") || "Not selected",
+  soil: localStorage.getItem("soilType") || "Not selected",
+  field: size,
+  timestamp: new Date().toLocaleString()
+};
+
+// Save in localStorage history array
+const history = JSON.parse(localStorage.getItem("history")) || [];
+history.push(newRecord);
+localStorage.setItem("history", JSON.stringify(history));
+
+window.location.href = 'payment.html';
+
+}
+// function saveFieldSize() {
+//   const size = parseInt(document.getElementById("fieldSize").value);
+//   if (!size || size < 1 || size > 100) {
+//     alert("Please enter a valid field size between 1 and 100 acres.");
+//     return;
+//   }
+
+//   const pricePerAcre = 1000; // you can change this if needed
+//   const totalPrice = size * pricePerAcre;
+
+//   localStorage.setItem('fieldSize', size);
+//   localStorage.setItem('totalPrice', totalPrice); // ✅ This line fixes your issue
+
+//   window.location.href = 'payment.html';
+// }
+// function saveFieldSize() {
+//   const size = parseInt(document.getElementById("fieldSize").value);
+//   if (!size || size < 1 || size > 100) {
+//     alert("Please enter a valid field size between 1 and 100 acres.");
+//     return;
+//   }
+
+//   localStorage.setItem('fieldSize', size);
+//   localStorage.setItem('totalPrice', size * 1000);
+
+//   // Initialize Firebase if not already done
+//   if (!firebase.apps.length) {
+//     firebase.initializeApp(firebaseConfig);
+//   }
+
+//   const user = firebase.auth().currentUser;
+//   if (user) {
+//     // Create the complete history entry
+//     const historyData = {
+//       cropType: localStorage.getItem("cropType") || "Not selected",
+//       soilType: localStorage.getItem("soilType") || "Not selected",
+//       fieldSize: size + " acres",
+//       timestamp: new Date().toLocaleString(),
+//       serverTimestamp: firebase.database.ServerValue.TIMESTAMP
+//     };
+
+//     // Save to history node
+//     firebase.database().ref('history/' + user.uid).push(historyData)
+//       .then(() => {
+//         console.log("History saved successfully");
+//         window.location.href = 'payment.html';
+//       })
+//       .catch(error => {
+//         console.error("Error saving history:", error);
+//         window.location.href = 'payment.html';
+//       });
+//   } else {
+//     window.location.href = 'payment.html';
+//   }
+// }
+//   </script>
+
+  <script>
+    const translations = {
+      en: {
+        title: "Enter Field Size",
+        enterFieldSize: "Enter Field Size (in acres)",
+        next: "Next"
+      },
+      hi: {
+        title: "कृषि क्षेत्र का आकार दर्ज करें",
+        enterFieldSize: "कृषि क्षेत्र का आकार दर्ज करें (एकड़ में)",
+        next: "अगला"
+      },
+      te: {
+        title: "భూమి పరిమాణాన్ని నమోదు చేయండి",
+        enterFieldSize: "భూమి పరిమాణం నమోదు చేయండి (ఎకరాలలో)",
+        next: "తర్వాత"
+      }
+    };
+
+    let currentLang = localStorage.getItem("language") || "en";
+
+    function translatePage() {
+      const elements = document.querySelectorAll("[data-translate]");
+      elements.forEach(el => {
+        const key = el.getAttribute("data-translate");
+        if (translations[currentLang] && translations[currentLang][key]) {
+          el.textContent = translations[currentLang][key];
+        }
+      });
+    }
+
+    function setLanguage(lang) {
+      currentLang = lang;
+      localStorage.setItem("language", lang);
+      translatePage();
+    }
+
+    window.onload = translatePage;
+  </script>
+
+
+  <script src="../js/lang.js"></script>
+<script src="../js/history.js"></script>
+</body>
+</html>
