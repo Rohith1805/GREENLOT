@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Smart Irrigation - Readings</title>
+  <link rel="stylesheet" href="../css/navbar.css" />
+  <link rel="stylesheet" href="../css/readings.css" />
+  <!-- <link rel="stylesheet" href="../css/about.css" /> -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav>
+    <div class="logo-title">
+      <img src="../pictures/leaf-icon.jpeg" alt="Logo" />
+      <h2>Smart Irrigation</h2>
+    </div>
+    <div class="menu">
+      <a href="index.html" data-key="home">Home</a>
+      <a href="about.html"  data-key="about">About Us</a>
+      <a href="readings.html" class="active"data-key="readings">Readings</a>
+      <a href="history.html" data-key="history">History</a>
+      <a href="control.html" data-key="control">Control</a>
+      <a href="news.html"   data-key="news">News</a>
+    </div>
+    <div class="lang-selector">
+      <select id="languageSwitcher" onchange="switchLanguage(event)">
+        <option value="en">English</option>
+        <option value="hi">हिंदी</option>
+        <option value="te">తెలుగు</option>
+      </select>
+    </div>
+    <div id="profileSection">
+      <!-- Filled dynamically -->
+    </div>
+  </nav>
+
+  <!-- Readings Section -->
+  <div class="readings-container"></div>
+
+  <!-- Firebase SDKs -->
+  <!-- <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script> -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+  <!-- <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script> -->
+
+  <!-- <script>
+    // Firebase Config
+    const firebaseConfig = {
+      apiKey: "AIzaSyB0N7Mur6QbhZ9cOeWJwSZ3PZ-mvK8dQP0",
+      authDomain: "smart-irrigation-f767b.firebaseapp.com",
+      projectId: "smart-irrigation-f767b",
+      storageBucket: "smart-irrigation-f767b.appspot.com",
+      messagingSenderId: "832482451249",
+      appId: "1:832482451249:web:1e6b0b787c81a89b419a10",
+      measurementId: "G-Z5GT8M1BZ1",
+      databaseURL: "https://smart-irrigation-f767b-default-rtdb.firebaseio.com"
+    };
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database(); -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
+
+  <script>
+    // Initialize Firebase
+    const firebaseConfig = {
+      apiKey: "AIzaSyBSzBnOxpLTqKiNbNIxQRbZiYcGG0z6QcI",
+      authDomain: "smart-irrigation-fbefa.firebaseapp.com",
+      databaseURL: "https://smart-irrigation-fbefa-default-rtdb.firebaseio.com",
+      projectId: "smart-irrigation-fbefa",
+      storageBucket: "smart-irrigation-fbefa.appspot.com",
+      messagingSenderId: "936444362857",
+      appId: "1:936444362857:web:8146a60a676223a258e2f8"
+    };
+    firebase.initializeApp(firebaseConfig);
+   
+  const database = firebase.database();
+  const readingContainer = document.querySelector(".readings-container");
+
+  function displaySensorData(data, selectedFeatures) {
+    const readings = {
+      temperature: { emoji: "🌡️", label: "Temperature", value: data.temperature + " °C" },
+      humidity: { emoji: "💧", label: "Humidity", value: data.humidity + " %" },
+      soilMoisture: { emoji: "🌱", label: "Soil Moisture", value: data.soilMoisture + " %" },
+      gasLevel: { emoji: "🌀", label: "Gas Level", value: data.gasLevel + " ppm" },
+      lightIntensity: { emoji: "🌞", label: "Light Intensity", value: data.ldr + " lux" }
+    };
+
+    readingContainer.innerHTML = "";
+
+    selectedFeatures.forEach((featureKey) => {
+      const r = readings[featureKey];
+      if (r) {
+        const card = document.createElement("div");
+        card.className = "reading-card";
+        card.innerHTML = `
+          <div class="emoji">${r.emoji}</div>
+          <div>${r.label}</div>
+          <div class="value">${r.value}</div>
+        `;
+        readingContainer.appendChild(card);
+      }
+    });
+  }
+
+  function fetchDataFromFirebase(selectedFeatures) {
+    database.ref("/sensorData").on("value", (snapshot) => {
+      const data = snapshot.val();
+      if (data) {
+        displaySensorData(data, selectedFeatures);
+      } else {
+        readingContainer.innerHTML = "<p>No data found.</p>";
+      }
+    });
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const selectedFeatures = JSON.parse(localStorage.getItem("features")) || [];
+    if (selectedFeatures.length === 0) {
+      readingContainer.innerHTML = "<p>No features selected. Please go back and select them.</p>";
+      return;
+    }
+
+    fetchDataFromFirebase(selectedFeatures);
+  });
+
+
+  </script>
+  
+
+  <!-- Optional: Add CSS here or link to your CSS file -->
+  <style>
+    .readings-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      justify-content: center;
+      padding: 2rem;
+    }
+
+    .reading-card {
+      background: #f0f0f0;
+      padding: 1.5rem;
+      border-radius: 1rem;
+      text-align: center;
+      width: 150px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      font-family: Arial, sans-serif;
+    }
+
+    .reading-card .emoji {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .reading-card .value {
+      font-weight: bold;
+      margin-top: 0.5rem;
+    }
+  </style>
+
+    <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const profileSection = document.getElementById("profileSection");
+      const isLoggedIn = localStorage.getItem("smartIrrigationLoggedIn") === "true";
+      const user = JSON.parse(localStorage.getItem("smartIrrigationCurrentUser"));
+
+      // Profile section
+      if (isLoggedIn && user) {
+        profileSection.innerHTML = `
+           <a href="notifications.html" class="notification" title="Notifications">
+  <i class="fa-solid fa-bell"></i>
+  <span class="dot"></span>
+</a>
+          <div class="user-profile-container">
+            <div class="user-profile" id="profileBtn">
+              <i class="fa-solid fa-user"></i>
+              <span>${user.name}</span>
+              <i class="fa-solid fa-caret-down"></i>
+            </div>
+            <div class="profile-dropdown" id="profileDropdown">
+              <a href="#">Settings</a>
+              <button id="toggleDarkMode">Toggle Dark Mode</button>
+              <button id="logoutBtn">Logout</button>
+            </div>
+          </div>
+        `;
+
+        const profileBtn = document.getElementById('profileBtn');
+        const profileDropdown = document.getElementById('profileDropdown');
+
+        profileBtn.addEventListener('click', () => {
+          profileDropdown.style.display = profileDropdown.style.display === 'flex' ? 'none' : 'flex';
+        });
+
+        document.getElementById('logoutBtn').addEventListener('click', () => {
+          localStorage.removeItem('smartIrrigationLoggedIn');
+          localStorage.removeItem('smartIrrigationCurrentUser');
+          window.location.href = 'signin.html';
+        });
+
+        document.getElementById('toggleDarkMode').addEventListener('click', () => {
+          document.body.classList.toggle('dark-mode');
+          localStorage.setItem('theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
+        });
+
+        window.addEventListener('click', function (e) {
+          if (!profileBtn.contains(e.target) && !profileDropdown.contains(e.target)) {
+            profileDropdown.style.display = 'none';
+          }
+        });
+      }
+
+      // Restore theme
+      const savedTheme = localStorage.getItem("theme");
+      if (savedTheme === "dark") {
+        document.body.classList.add("dark-mode");
+      }
+
+      // Load readings
+      const selectedFeatures = JSON.parse(localStorage.getItem("features")) || [];
+      const emojiMap = {
+        temperature: "🌡️",
+        humidity: "💧",
+        soilMoisture: "🌱",
+        gasLevel: "🌀",
+        lightIntensity: "🌞"
+      };
+
+      const labelMap = {
+        temperature: "Temperature",
+        humidity: "Humidity",
+        soilMoisture: "Soil Moisture",
+        gasLevel: "Gas Level",
+        lightIntensity: "Light Intensity"
+      };
+
+      const readingsContainer = document.querySelector(".readings-container");
+      readingsContainer.innerHTML = "";
+
+      db.ref("readings").on("value", (snapshot) => {
+        const data = snapshot.val();
+        readingsContainer.innerHTML = "";
+
+        selectedFeatures.forEach((feature) => {
+          if (data && data[feature] !== undefined) {
+            const card = document.createElement("div");
+            card.className = "reading-card";
+            const unit = feature === "temperature" ? "°C" :
+                         feature === "humidity" || feature === "soilMoisture" ? "%" :
+                         feature === "gasLevel" ? " ppm" : " lux";
+
+            card.innerHTML = `
+              <div class="emoji">${emojiMap[feature]}</div>
+              <div>${labelMap[feature]}</div>
+              <div class="value">${data[feature]}${unit}</div>
+            `;
+            readingsContainer.appendChild(card);
+          }
+        });
+
+        if (readingsContainer.children.length === 0) {
+          readingsContainer.innerHTML = "<p style='margin: 2rem; font-size: 1.1rem;'>No features selected. Please go back and choose features.</p>";
+        }
+      });
+    });
+  </script>
+  <script src="../js/lang.js"></script>
+</body>
+</html>
