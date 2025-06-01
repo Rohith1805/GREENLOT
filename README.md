@@ -3,6 +3,7 @@
 
 **GREENLOT** is a full-stack smart agriculture system designed to empower farmers with intelligent field monitoring, real-time decision-making, and multilingual accessibility. By combining IoT sensors, Firebase integration, and a beautifully crafted web interface, GREENLOT makes modern farming more accessible, efficient, and automated.
 
+> _To deploy this project locally or on a server:_https://greenlot.onrender.com/index.html
 ---
 
 ## 🔍 Project Overview
@@ -90,7 +91,7 @@ Firebase is used for:
 
 ## 🛠️ Installation & Setup
 
-> _To deploy this project locally or on a server:_
+> _To deploy this project locally or on a server:_https://greenlot.onrender.com/index.html
 
 1. Clone the repository:
    ```bash
