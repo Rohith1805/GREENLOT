@@ -94,7 +94,7 @@ Firebase is used for:
 
 1. Clone the repository:
    ```bash
-   git clone 
+   git clone https://github.com/Rohith1805/GREENLOT.git
    ```
 
 2. Open the `html/` folder and launch `control.html` in your browser.
@@ -136,8 +136,8 @@ We welcome contributions! Feel free to fork the repo, improve the UI, suggest ne
 Have questions or suggestions? Reach out via:
 
 - GitHub Issues
-- [Your Email Here]
-- [Your Portfolio or LinkedIn if applicable]
+- siddagounirohith@gmail.com
+
 
 ---
 
