@@ -12,14 +12,14 @@ import ssd1306
 #import framebuf  # Required for graphics
 
 # Wi-Fi Credentials
-SSID = "Iqoo.."
-PASSWORD = "Rohith2006"
+SSID = "WIFI NAME"
+PASSWORD = "WIFI PASSWORD"
 
 # Load Firebase Credentials Securely
 # Load Firebase Credentials Securely
 # Firebase Credentials (Direct Method)
-FIREBASE_URL = "https://smart-irrigation-fbefa-default-rtdb.firebaseio.com/"
-FIREBASE_SECRET = "fhH2fUgCNWSNHodscvaruea2aRMR2KCVL8ftZYo3"
+FIREBASE_URL = "YOUR_FIREBASE_URL"
+FIREBASE_SECRET = "YOUR_FIREBASE_PASSWORD"
 
 
 
