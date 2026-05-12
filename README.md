@@ -1,4 +1,4 @@
-https://www.tinkercad.com/things/hVKS2W8o4Ys-copy-of-neat-vihelmo-sango/editel?returnTo=https%3A%2F%2Fwww.tinkercad.com%2Fdashboard&sharecode=TE1w7UCi-8Bp5HPx0VQqaUY0qlMuNcFyC5z_uiG3XqE
+]https://aws-bdol.vercel.app https://scamm-weld.vercel.app/    https://github.com/justinsamuel07/CC_LAB
 
 #GREENLOT
 # 🌿 GREENLOT — Smart Agriculture & Irrigation System
