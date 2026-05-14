@@ -1,16 +1,3 @@
-]https://aws-bdol.vercel.app https://scamm-weld.vercel.app/    https://github.com/justinsamuel07/CC_LAB
-
-
-Mail bijjalamanisai28@gmail.com 
-Pass 
-manisai@2005
-
- harshithgaddam83@gmail.com
- sonu@2006
- 
- Jai Krishna Kmit: jayakrishnaadapa24@kmit.edu.in
-Jay@4768
-
 #GREENLOT
 # 🌿 GREENLOT — Smart Agriculture & Irrigation System
 
